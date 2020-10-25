@@ -1,0 +1,23 @@
+---
+## Home Assistant Main Config
+homeassistant:
+  customize: !include customize.yaml
+
+  # https://home-assistant.io/docs/configuration/packages/
+  packages: !include_dir_named packages
+
+## Home Assistant Components Enabled
+# https://www.home-assistant.io/integrations/default_config/
+default_config:
+
+# https://www.home-assistant.io/integrations/api/
+api:
+
+# https://home-assistant.io/components/http/
+http:
+  login_attempts_threshold: 100
+
+## Home Assistant Core Components Global
+# https://www.home-assistant.io/components/logger/
+logger:
+  default: error
