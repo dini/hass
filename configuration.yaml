@@ -21,3 +21,21 @@ http:
 # https://www.home-assistant.io/components/logger/
 logger:
   default: error
+
+# https://www.home-assistant.io/components/notify/
+# and
+# https://www.home-assistant.io/components/notify.group/
+notify:
+
+## General Automation
+# https://www.home-assistant.io/components/automation/
+automation:
+  - alias: Update Available Notification
+    trigger:
+      platform: state
+      entity_id: updater.updater
+    action:
+      service: notify.notify
+      data:
+        message: "Update for Home Assistant is available."
+        title: "Update"

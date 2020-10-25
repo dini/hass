@@ -1,0 +1,77 @@
+---
+sensor:
+  - platform: systemmonitor
+    resources:
+      - type: disk_free
+        arg: /
+      - type: disk_use_percent
+        arg: /
+      - type: swap_use_percent
+      - type: memory_free
+      - type: memory_use_percent
+      - type: processor_use
+      - type: load_1m
+      - type: load_5m
+      - type: load_15m
+
+  - platform: command_line
+    name: HA CPU Temp
+    command: "/bin/cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: "{{ value | multiply(0.001) | round(1) }}"
+  - platform: command_line
+    name: HA GPU Temp
+    command: "/opt/vc/bin/vcgencmd measure_temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | regex_findall_index("=([0-9]*\.[0-9]*)", 0) }}'
+  - platform: command_line
+    name: HA CPU Clock
+    command: "/opt/vc/bin/vcgencmd measure_clock arm"
+    unit_of_measurement: "MHz"
+    value_template: '{{ value | regex_findall_index("=([0-9]*)", 0) | multiply(0.000001) | round(0) }}'
+
+automation:
+  - alias: HA Low Disk Space Alert
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.disk_use_percent
+        above: 90
+    action:
+      - service: notify.notify
+        data:
+          title: "HA Low Resource Alert"
+          message: "Low Disk Space > 90% Used"
+
+  - alias: HA Low Memory Alert
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.memory_use_percent
+        above: 90
+    action:
+      - service: notify.notify
+        data:
+          title: "HA Low Resource Alert"
+          message: "Low Memory > 90% Used"
+
+  - alias: HA High Load Alert
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.load_5m
+        above: 2.8 # 4 Cores in RPi3 x 0.7 per core, for relatively high sustained load = 
+    action:
+      - service: notify.notify
+        data:
+          title: "HA Low Resource Alert"
+          message: "System Load 5m Load Average > 2.8"
+
+recorder:
+  include:
+    entities:
+      - sensor.disk_use_percent
+      - sensor.memory_use_percent
+
+history:
+  include:
+    entities:
+      - sensor.disk_use_percent
+      - sensor.memory_use_percent
