@@ -5,6 +5,7 @@
 !*.yml
 !.gitignore
 !*.md
+!packages
 
 # Ignore folders.
 .storage

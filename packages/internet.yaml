@@ -1,0 +1,11 @@
+homeassistant:
+  customize:
+    sensor.external_ip:
+      icon: mdi:ip-network-outline
+      show_last_changed: true
+
+sensor:
+  - platform: rest
+    resource: http://ip.jsontest.com
+    name: External IP
+    value_template: '{{ value_json.ip }}'
