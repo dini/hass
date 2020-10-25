@@ -1,0 +1,11 @@
+---
+## Home Assistant Main Config
+name: Home
+latitude: !secret latitude
+longitude: !secret longitude
+unit_system: metric
+time_zone: !secret timezone
+customize: !include customize.yaml
+
+# https://home-assistant.io/docs/configuration/packages/
+packages: !include_dir_named packages

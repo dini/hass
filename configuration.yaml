@@ -1,10 +1,6 @@
 ---
 ## Home Assistant Main Config
-homeassistant:
-  customize: !include customize.yaml
-
-  # https://home-assistant.io/docs/configuration/packages/
-  packages: !include_dir_named packages
+homeassistant: !include homeassistant.yaml
 
 ## Home Assistant Components Enabled
 # https://www.home-assistant.io/integrations/default_config/
@@ -30,12 +26,3 @@ notify:
 ## General Automation
 # https://www.home-assistant.io/components/automation/
 automation:
-  - alias: Update Available Notification
-    trigger:
-      platform: state
-      entity_id: updater.updater
-    action:
-      service: notify.notify
-      data:
-        message: "Update for Home Assistant is available."
-        title: "Update"
