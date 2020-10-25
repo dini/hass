@@ -3,7 +3,7 @@ language: python
 python:
 - "3.7"
 before_install:
-- sudo apt-get install -y libudev-dev curl wget unzip
+- sudo apt-get install -y libudev-dev curl wget unzip grep
 - mkdir -p ./custom_components/hacs
 install:
 - pip3 install homeassistant
