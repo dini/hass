@@ -3,13 +3,13 @@ language: python
 python:
 - "3.7"
 before_install:
-- sudo apt-get install -y libudev-dev curl wget unzip grep
+- sudo apt-get install -y libudev-dev curl wget unzip
 - mkdir -p ./custom_components/hacs
 install:
 - pip3 install homeassistant
 - |
-  echo "https://github.com/hacs/integration/releases/download/
-  $(curl -s https://api.github.com/repos/hacs/integration/releases/latest |
+  echo "https://github.com/hacs/integration/releases/download/\
+  $(curl -s https://api.github.com/repos/hacs/integration/releases/latest | \
   grep -oP '"tag_name": "\K(.*)(?=")')/hacs.zip" | wget -i -
 - unzip -q hacs.zip -d ./custom_components/hacs
 - mv travis_secrets.yaml secrets.yaml
