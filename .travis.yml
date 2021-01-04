@@ -7,9 +7,8 @@ before_install:
 - mkdir -p ./custom_components/hacs
 install:
 - |
-  echo "https://github.com/hacs/integration/releases/download/" \
-  "$(curl -s https://api.github.com/repos/hacs/integration/releases/latest |
-  grep -oP '"tag_name": "\K(.*)(?=")')/hacs.zip" | wget -i -
+  curl -s https://api.github.com/repos/hacs/integration/releases/latest |
+  grep -oP '"browser_download_url": "\K(.*)(?=")' | wget -i -
 - unzip -q hacs.zip -d ./custom_components/hacs
 - mv travis_secrets.yaml secrets.yaml
 - pip3 install homeassistant
