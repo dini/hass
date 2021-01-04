@@ -1,9 +1,9 @@
 ---
 ## Home Assistant Main Config
-name: Home
+name: !secret name
 latitude: !secret latitude
 longitude: !secret longitude
-unit_system: metric
+unit_system: !secret unit
 time_zone: !secret timezone
 customize: !include customize.yaml
 
