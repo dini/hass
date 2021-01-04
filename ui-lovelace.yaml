@@ -1,0 +1,5 @@
+name: !secret name
+views:
+  - title: Дом
+    id: main
+    icon: mdi:floor-plan
